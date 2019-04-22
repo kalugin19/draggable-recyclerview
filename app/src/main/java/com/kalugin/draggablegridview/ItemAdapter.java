@@ -66,7 +66,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
         private TextView textView;
 
-        public Holder(@NonNull View itemView) {
+        Holder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.item);
         }

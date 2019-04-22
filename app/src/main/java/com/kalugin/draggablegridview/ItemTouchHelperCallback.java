@@ -3,7 +3,7 @@ package com.kalugin.draggablegridview;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
+class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
     private final ItemAdapter mAdapter;
 
     public ItemTouchHelperCallback(ItemAdapter adapter) {
