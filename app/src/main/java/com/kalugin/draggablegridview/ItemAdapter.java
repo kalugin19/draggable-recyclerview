@@ -5,27 +5,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.RandomAccess;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
     private List<String> mItems = new ArrayList<>();
 
-    public void init(){
-        for (int i = 0; i<400; i++){
-            mItems.add(i  + "AAAAA");
+    private void init() {
+        for (int i = 0; i < 400; i++) {
+            mItems.add(i + "AAAAA");
         }
     }
 
 
-    public ItemAdapter() {
+    ItemAdapter() {
         init();
     }
 
@@ -64,7 +62,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
         return true;
     }
 
-    class Holder extends RecyclerView.ViewHolder{
+    class Holder extends RecyclerView.ViewHolder {
 
         private TextView textView;
 

@@ -15,12 +15,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4, RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
         ItemAdapter itemAdapter = new ItemAdapter();
         recyclerView.setAdapter(itemAdapter);
         ItemTouchHelper.Callback callback =
                 new ItemTouchHelperCallback(itemAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.item_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.item_grid_spacing_small);
+        recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
+
     }
 }
