@@ -1,9 +1,10 @@
 package com.kalugin.draggablegridview;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
+
+import com.kalugin.draggablegridview.remote.GithubApi;
 
 import java.util.concurrent.Executor;
 
@@ -11,7 +12,7 @@ public class GithubUserDataSourceFactory extends DataSource.Factory<Long, User> 
 
     private final GithubApi restService;
     private final Executor retryExecutor;
-    private final LiveData<GithubUserDataSource> sourceLiveData = new MutableLiveData<>();
+    public final MutableLiveData<GithubUserDataSource> sourceLiveData = new MutableLiveData<>();
 
     public GithubUserDataSourceFactory(GithubApi restService, Executor retryExecutor) {
         this.restService = restService;
@@ -21,7 +22,9 @@ public class GithubUserDataSourceFactory extends DataSource.Factory<Long, User> 
     @NonNull
     @Override
     public DataSource<Long, User> create() {
-        return new GithubUserDataSource(restService, retryExecutor);
+        GithubUserDataSource source = new GithubUserDataSource(restService, retryExecutor);
+        sourceLiveData.postValue(source);
+        return source;
     }
 
 }

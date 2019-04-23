@@ -1,6 +1,8 @@
-package com.kalugin.draggablegridview;
+package com.kalugin.draggablegridview.remote;
 
 import androidx.lifecycle.LiveData;
+
+import com.kalugin.draggablegridview.User;
 
 import java.util.List;
 

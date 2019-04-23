@@ -4,7 +4,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.paging.ItemKeyedDataSource;
+
+import com.kalugin.draggablegridview.remote.ApiResponse;
+import com.kalugin.draggablegridview.remote.GithubApi;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -16,23 +21,30 @@ public class GithubUserDataSource extends ItemKeyedDataSource<Long, User> {
     private final GithubApi restService;
     private final Executor retryExecutor;
     private IRetry iRetry;
+    public final MutableLiveData<NetworkState> networkStateLiveData = new MutableLiveData<>();
 
-
-    public GithubUserDataSource(GithubApi restService, Executor retryExecutor) {
+    GithubUserDataSource(GithubApi restService, Executor retryExecutor) {
         this.restService = restService;
         this.retryExecutor = retryExecutor;
     }
 
     private void fetchUsers(Long id, LoadCallback<User> callback, IRetry iRetry) {
         LiveData<ApiResponse<List<User>>> responseLiveData = restService.getUsers(id);
-        ApiResponse<List<User>> response = responseLiveData.getValue();
-        if (response != null && response.isSuccessful() && TextUtils.isEmpty(response.errorMessage) && response.body != null) {
-            callback.onResult(response.body);
-            this.iRetry = null;
-        } else {
-            this.iRetry = iRetry;
-        }
+        responseLiveData.observeForever(new Observer<ApiResponse<List<User>>>() {
+            @Override
+            public void onChanged(ApiResponse<List<User>> listApiResponse) {
+                ApiResponse<List<User>> response = responseLiveData.getValue();
+                if (response != null && response.isSuccessful() && TextUtils.isEmpty(response.errorMessage) && response.body != null) {
+                    callback.onResult(response.body);
+                    GithubUserDataSource.this.iRetry = null;
+                } else {
+                    GithubUserDataSource.this.iRetry = iRetry;
+                }
+                responseLiveData.removeObserver(this);
+            }
+        });
     }
+
 
     public void retry() {
         if (retryExecutor != null) {

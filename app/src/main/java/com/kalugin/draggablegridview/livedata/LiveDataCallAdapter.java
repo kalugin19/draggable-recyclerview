@@ -5,7 +5,7 @@ package com.kalugin.draggablegridview.livedata;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.kalugin.draggablegridview.ApiResponse;
+import com.kalugin.draggablegridview.remote.ApiResponse;
 
 import java.lang.reflect.Type;
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -1,8 +1,10 @@
-package com.kalugin.draggablegridview;
+package com.kalugin.draggablegridview.remote;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.kalugin.draggablegridview.BuildConfig;
 
 import java.io.IOException;
 
